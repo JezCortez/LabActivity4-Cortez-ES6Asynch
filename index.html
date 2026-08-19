@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wire Desk — Live Dispatch Board</title>
+<meta name="description" content="Lab Activity 4: ES6+ syntax and asynchronous JavaScript, live against the JSONPlaceholder /posts API." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Signature element: scrolling wire ticker, populated live from fetched data -->
+  <div class="ticker-bar" aria-hidden="true">
+    <div class="ticker-track" id="tickerTrack">Booting wire receiver…</div>
+  </div>
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="masthead-id">
+        <span class="wire-mark">JP · WIRE</span>
+        <h1>WIRE DESK</h1>
+        <p class="deck">Live dispatch board, sourced from <code>jsonplaceholder.typicode.com/posts</code></p>
+      </div>
+      <div class="status-lamp" id="statusLamp" role="status">
+        <span class="lamp-dot" id="lampDot"></span>
+        <span id="statusText">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="board">
+
+    <section class="control-deck" aria-label="Board controls">
+      <div class="control-group grow">
+        <label for="searchInput">Search wire</label>
+        <input id="searchInput" type="search" placeholder="Search headlines and dispatch text…" autocomplete="off" />
+      </div>
+      <div class="control-group">
+        <label for="correspondentSelect">Correspondent</label>
+        <select id="correspondentSelect">
+          <option value="all">All correspondents</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="sortSelect">Order</label>
+        <select id="sortSelect">
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="az">Headline A–Z</option>
+        </select>
+      </div>
+      <div class="control-actions">
+        <button id="refreshBtn" class="btn btn-ghost" type="button">↻ Refresh wire</button>
+        <button id="sendBtn" class="btn btn-primary" type="button">＋ Send dispatch</button>
+      </div>
+    </section>
+
+    <section class="stats-strip" id="statsStrip" aria-label="Wire statistics">
+      <!-- filled by renderStats() -->
+    </section>
+
+    <section id="feedRegion" aria-live="polite">
+      <p id="feedStatus" class="feed-status"></p>
+      <div id="feed" class="feed-grid"></div>
+    </section>
+
+  </main>
+
+  <!-- Send-dispatch dialog (native <dialog>, no framework needed) -->
+  <dialog id="sendDialog" class="send-dialog">
+    <form id="sendForm" method="dialog">
+      <h2>File a new dispatch</h2>
+      <p class="dialog-sub">Posts via <code>POST /posts</code>. JSONPlaceholder mocks the save — it will not persist after reload.</p>
+      <label for="titleField">Headline</label>
+      <input id="titleField" name="title" type="text" required maxlength="120" placeholder="e.g. Senate advances new bill" />
+      <label for="bodyField">Dispatch text</label>
+      <textarea id="bodyField" name="body" rows="4" required maxlength="500" placeholder="Write the body of the dispatch…"></textarea>
+      <label for="authorField">Filed as correspondent</label>
+      <select id="authorField" name="userId"></select>
+      <div class="dialog-actions">
+        <button type="button" class="btn btn-ghost" id="cancelSendBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="confirmSendBtn">Transmit</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="wire-footer">
+    <p>Data via <a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener">JSONPlaceholder</a> · Lab Activity 4 — ES6+ &amp; Asynchronous JavaScript</p>
+  </footer>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
